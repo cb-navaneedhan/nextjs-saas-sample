@@ -4,6 +4,7 @@ const {
   customers,
   revenue,
   users,
+  properties,
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
 
@@ -84,6 +85,50 @@ async function seedInvoices(client) {
     console.error('Error seeding invoices:', error);
     throw error;
   }
+}
+
+async function seedProperties(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Create the "properties" table if it doesn't exist
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS properties (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        address VARCHAR(255) NOT NULL,
+        image_url VARCHAR(255) NOT NULL,
+        monthly_rent INT NOT NULL,
+        tenants INT NOT NULL,
+        isLet BOOLEAN NOT NULL,
+        compliance_status VARCHAR(255) NOT NULL
+      );
+    `;
+
+    console.log(`Created "properties" table`);
+
+    // Insert data into the "properties" table
+    const insertedProperties = await Promise.all(
+      properties.map(
+        (property) => client.sql`
+        INSERT INTO properties (id, title, address, image_url, monthly_rent, tenants, isLet, compliance_status)
+        VALUES (${property.id}, ${property.title}, ${property.address}, ${property.image_url}, ${property.monthly_rent}, ${property.tenants}, ${property.isLet}, ${property.compliance_status})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+      ),
+    );
+
+    console.log(`Seeded ${insertedProperties.length} properties`);
+
+    return {
+      createTable,
+      properties: insertedProperties,
+    };
+  } catch (error) {
+    console.error('Error seeding properties:', error);
+    throw error;
+  }
+
 }
 
 async function seedCustomers(client) {
@@ -167,6 +212,7 @@ async function main() {
   await seedCustomers(client);
   await seedInvoices(client);
   await seedRevenue(client);
+  await seedProperties(client);
 
   await client.end();
 }

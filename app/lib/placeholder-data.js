@@ -180,9 +180,33 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
+const properties = [
+  {
+    id: 'a3bffde0-9e16-11ee-8c90-0242ac120002',
+    title: '1 bed flat to rent',
+    address: 'Navarino Road, London E8',
+    image_url: '/images/properties/1-bed-flat-to-rent.png',
+    monthly_rent: 1000,
+    tenants: 2,
+    isLet: false,
+    compliance_status: 'pending'
+  },
+  {
+    id: 'a3c0002e-9e16-11ee-8c90-0242ac120002',
+    title: '2 bed flat to rent',
+    address: 'Navarino Road, London E8',
+    image_url: '/properties/2-bed-flat-to-rent.png',
+    monthly_rent: 2000,
+    tenants: 3,
+    isLet: true,
+    compliance_status: 'complete'
+  }
+]
+
 module.exports = {
   users,
   customers,
   invoices,
   revenue,
+  properties
 };

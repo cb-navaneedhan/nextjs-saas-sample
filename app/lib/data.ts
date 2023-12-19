@@ -22,7 +22,7 @@ export async function fetchRevenue() {
     // Don't do this in production :)
 
     console.log('Fetching revenue data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
@@ -238,5 +238,15 @@ export async function getUser(email: string) {
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
+  }
+}
+
+export async function fetchProperties() {
+  try {
+    const properties = await sql`SELECT * FROM properties`;
+    return properties.rows;
+  } catch (error) {
+    console.error('Failed to fetch properties:', error);
+    throw new Error('Failed to fetch properties.');
   }
 }

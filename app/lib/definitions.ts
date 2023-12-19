@@ -26,6 +26,17 @@ export type Invoice = {
   status: 'pending' | 'paid';
 };
 
+export type Property = {
+  id: string;
+  title: string;
+  address: string;
+  image_url: string;
+  monthly_rent: number;
+  tenants: number;
+  isLet: boolean;
+  compliance_status: 'pending' | 'complete';
+};
+
 export type Revenue = {
   month: string;
   revenue: number;
