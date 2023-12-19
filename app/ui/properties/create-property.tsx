@@ -65,8 +65,8 @@ export default function PropertyForm() {
                 </label>
                 <div className="relative mt-2 rounded-md">
                         <input
-                            id="image_url"
-                            name="image_url"
+                            id="imageUrl"
+                            name="imageUrl"
                             type="text"
                             placeholder="Enter Property Image URL"
                             className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
@@ -106,7 +106,7 @@ export default function PropertyForm() {
                 </div>
             </div>
 
-                {/* Property isLet */}
+                {/* Property lettingStatus */}
             <fieldset>
             <legend className="mb-2 block text-sm font-medium">
                 What is the current property letting status?
@@ -119,6 +119,7 @@ export default function PropertyForm() {
                     name="lettingStatus"
                     type="radio"
                     value="true"
+                    checked
                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                     />
                     <label
@@ -133,7 +134,7 @@ export default function PropertyForm() {
                     id="propertyStatusLetNo"
                     name="lettingStatus"
                     type="radio"
-                    value="false"
+                    value="true"
                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                     />
                     <label

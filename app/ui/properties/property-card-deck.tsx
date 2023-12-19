@@ -11,7 +11,7 @@ const properties: Property[] = [
     image_url: 'https://placekitten.com/800/600', // Replace with your actual image URL
     monthly_rent: 1500,
     tenants: 2,
-    isLet: false,
+    letting_status: 'let',
     compliance_status: 'complete',
   },
   // Add more properties as needed

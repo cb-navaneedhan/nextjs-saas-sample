@@ -39,25 +39,25 @@ const ProperyFormSchema = z.object({
     imageUrl: z.string(),
     monthlyRent: z.coerce.number(),
     tenants: z.coerce.number(),
-    isLet: z.boolean(),
+    lettingStatus: z.string(),
     complianceStatus: z.enum(['pending', 'complete']),
     });
 
 const CreateProperty = ProperyFormSchema.omit({ id: true });
 
 export async function createProperty(formData: FormData) {
-    const { title, address, imageUrl, monthlyRent, tenants, isLet, complianceStatus } = CreateProperty.parse({
+    const { title, address, imageUrl, monthlyRent, tenants, lettingStatus, complianceStatus } = CreateProperty.parse({
     title: formData.get('title'),
     address: formData.get('address'),
     imageUrl: formData.get('imageUrl'),
     monthlyRent: formData.get('monthlyRent'),
     tenants: formData.get('tenants'),
-    isLet: formData.get('isLet'),
+    lettingStatus: formData.get('lettingStatus'),
     complianceStatus: formData.get('complianceStatus'),
     });
     await sql`
-    INSERT INTO properties (title, address, image_url, monthly_rent, tenants, is_let, compliance_status)
-    VALUES (${title}, ${address}, ${imageUrl}, ${monthlyRent}, ${tenants}, ${isLet}, ${complianceStatus})
+    INSERT INTO properties (title, address, image_url, monthly_rent, tenants, letting_status, compliance_status)
+    VALUES (${title}, ${address}, ${imageUrl}, ${monthlyRent}, ${tenants}, ${lettingStatus}, ${complianceStatus})
     `;
     revalidatePath('/dashboard/properties');
     redirect('/dashboard/properties');

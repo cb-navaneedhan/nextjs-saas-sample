@@ -188,7 +188,7 @@ const properties = [
     image_url: '/images/properties/1-bed-flat-to-rent.png',
     monthly_rent: 1000,
     tenants: 2,
-    isLet: false,
+    letting_status: 'let',
     compliance_status: 'pending'
   },
   {
@@ -198,7 +198,7 @@ const properties = [
     image_url: '/properties/2-bed-flat-to-rent.png',
     monthly_rent: 2000,
     tenants: 3,
-    isLet: true,
+    letting_status: 'let',
     compliance_status: 'complete'
   }
 ]

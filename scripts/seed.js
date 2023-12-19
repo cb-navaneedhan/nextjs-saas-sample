@@ -87,6 +87,19 @@ async function seedInvoices(client) {
   }
 }
 
+async function dropProperties(client) {
+  try {
+        await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+        // Drop the "properties" table if it exists
+        const dropTable = await client.sql`DROP TABLE IF EXISTS properties`;
+        console.log(`Dropped "properties" table`);
+  }
+  catch (error) {
+    console.error('Error dropping properties:', error);
+    throw error;
+  }
+}
+
 async function seedProperties(client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -100,7 +113,7 @@ async function seedProperties(client) {
         image_url VARCHAR(255) NOT NULL,
         monthly_rent INT NOT NULL,
         tenants INT NOT NULL,
-        isLet BOOLEAN NOT NULL,
+        letting_status VARCHAR(255) NOT NULL,
         compliance_status VARCHAR(255) NOT NULL
       );
     `;
@@ -111,8 +124,8 @@ async function seedProperties(client) {
     const insertedProperties = await Promise.all(
       properties.map(
         (property) => client.sql`
-        INSERT INTO properties (id, title, address, image_url, monthly_rent, tenants, isLet, compliance_status)
-        VALUES (${property.id}, ${property.title}, ${property.address}, ${property.image_url}, ${property.monthly_rent}, ${property.tenants}, ${property.isLet}, ${property.compliance_status})
+        INSERT INTO properties (id, title, address, image_url, monthly_rent, tenants, letting_status, compliance_status)
+        VALUES (${property.id}, ${property.title}, ${property.address}, ${property.image_url}, ${property.monthly_rent}, ${property.tenants}, ${property.letting_status}, ${property.compliance_status})
         ON CONFLICT (id) DO NOTHING;
       `,
       ),
@@ -212,6 +225,7 @@ async function main() {
   await seedCustomers(client);
   await seedInvoices(client);
   await seedRevenue(client);
+  await dropProperties(client);
   await seedProperties(client);
 
   await client.end();

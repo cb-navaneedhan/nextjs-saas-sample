@@ -13,7 +13,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
     image_url,
     monthly_rent,
     tenants,
-    isLet,
+    letting_status,
     compliance_status,
   } = property;
 
@@ -29,8 +29,8 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
       <div className="p-6">
         <p className="text-gray-700 text-base">Monthly Rent: ${monthly_rent}</p>
         <p className="text-gray-700 text-base">Number of Tenants: {tenants}</p>
-        <p className={`text-${isLet ? 'green' : 'red'}-500 text-base`}>
-          Status: {isLet ? 'Available' : 'Not Available'}
+        <p className={ letting_status === 'let' ? `text-green-500 text-base` : `text-red-500 text-base`}>
+          Status: {letting_status}
         </p>
         <p className={`text-${compliance_status === 'complete' ? 'green' : 'orange'}-500 text-base`}>
           Compliance Status: {compliance_status}

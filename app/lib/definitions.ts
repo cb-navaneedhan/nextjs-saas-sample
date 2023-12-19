@@ -33,7 +33,7 @@ export type Property = {
   image_url: string;
   monthly_rent: number;
   tenants: number;
-  isLet: boolean;
+  letting_status: 'let' | 'not let';
   compliance_status: 'pending' | 'complete';
 };
 
