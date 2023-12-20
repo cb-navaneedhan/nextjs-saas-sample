@@ -1,6 +1,7 @@
 // components/PropertyCard.js
 import React from 'react';
 import { Property } from '../../lib/definitions'; // Assuming your types are stored in a 'types.js' file
+import Image from 'next/image';
 
 interface PropertyCardProps {
   property: Property;
@@ -19,8 +20,13 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-md md:max-w-2xl">
-      <img className="w-full h-48 object-cover" src={image_url} alt={title} />
-
+        <Image
+            className="w-full h-48 object-cover"
+            src={image_url}
+            alt={title}
+            width={800}
+            height={600}
+        />
       <div className="p-6">
         <div className="font-bold text-xl mb-2">{title}</div>
         <p className="text-gray-700 text-base">{address}</p>
