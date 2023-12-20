@@ -184,7 +184,7 @@ const properties = [
   {
     id: 'a3bffde0-9e16-11ee-8c90-0242ac120002',
     title: '1 bed flat to rent',
-    address: 'Navarino Road, London E8',
+    address: '22 Navarino Road, London E8 8R2',
     image_url: '/images/properties/1-bed-flat-to-rent.png',
     monthly_rent: 1000,
     tenants: 2,
@@ -194,7 +194,7 @@ const properties = [
   {
     id: 'a3c0002e-9e16-11ee-8c90-0242ac120002',
     title: '2 bed flat to rent',
-    address: 'Navarino Road, London E8',
+    address: 'Bishop\'s Grove, Medway Street, London SE4 2LX',
     image_url: '/properties/2-bed-flat-to-rent.png',
     monthly_rent: 2000,
     tenants: 3,
