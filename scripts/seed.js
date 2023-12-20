@@ -93,6 +93,9 @@ async function dropProperties(client) {
         // Drop the "properties" table if it exists
         const dropTable = await client.sql`DROP TABLE IF EXISTS properties`;
         console.log(`Dropped "properties" table`);
+        return {
+          dropTable,
+        };
   }
   catch (error) {
     console.error('Error dropping properties:', error);
