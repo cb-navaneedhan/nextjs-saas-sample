@@ -97,3 +97,14 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+export type PropertyForm = {
+  id: string;
+  title: string;
+  address: string;
+  image_url: string;
+  monthly_rent: number;
+  tenants: number;
+  letting_status: 'let' | 'not let';
+  compliance_status: 'pending' | 'complete';
+};

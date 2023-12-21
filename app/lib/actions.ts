@@ -142,6 +142,27 @@ export async function createProperty(formData: FormData) {
 
 }
 
+const UpdateProperty = ProperyFormSchema.omit({ id: true });
+
+export async function updateProperty(id: string, formData: FormData) {
+    const { title, address, imageUrl, monthlyRent, tenants, lettingStatus, complianceStatus } = UpdateProperty.parse({
+    title: formData.get('title'),
+    address: formData.get('address'),
+    imageUrl: formData.get('imageUrl'),
+    monthlyRent: formData.get('monthlyRent'),
+    tenants: formData.get('tenants'),
+    lettingStatus: formData.get('lettingStatus'),
+    complianceStatus: formData.get('complianceStatus'),
+    });
+    await sql`
+    UPDATE properties
+    SET title = ${title}, address = ${address}, image_url = ${imageUrl}, monthly_rent = ${monthlyRent}, tenants = ${tenants}, letting_status = ${lettingStatus}, compliance_status = ${complianceStatus}
+    WHERE id = ${id}
+    `;
+    revalidatePath('/dashboard/properties');
+    redirect('/dashboard/properties');
+}
+
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,

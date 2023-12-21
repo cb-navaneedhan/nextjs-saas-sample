@@ -251,3 +251,31 @@ export async function fetchProperties() {
       throw new Error('Failed to fetch properties.');
     }
 }
+
+export async function fetchPropertyById(id: string) {
+  noStore();
+  try {
+    const data = await sql<InvoiceForm>`
+      SELECT
+        properties.id,
+        properties.title,
+        properties.address,
+        properties.image_url,
+        properties.monthly_rent,
+        properties.tenants,
+        properties.letting_status,
+        properties.compliance_status
+      FROM properties
+      WHERE properties.id = ${id};
+    `;
+
+    const property = data.rows.map((property) => ({
+      ...property,
+    }));
+
+    return property[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch property.');
+  }
+}
