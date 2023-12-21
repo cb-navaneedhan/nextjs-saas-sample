@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 import {
   CheckIcon,
@@ -5,8 +6,23 @@ import {
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 import { createProperty } from '@/app/lib/actions';
+import { useForm } from 'react-hook-form';
+import { useDropzone } from 'react-dropzone';
 
 export default function PropertyForm() {
+
+    const { register, handleSubmit, setValue } = useForm();
+    const [images, setImages] = React.useState([]);
+
+    const onDrop = (acceptedFiles) => {
+        setImages((prevImages) => [...prevImages, ...acceptedFiles]);
+    };
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop,
+        accept: 'image/*',
+        multiple: true,
+    });
+
   return (
     <form action={createProperty}>
         <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -27,7 +43,7 @@ export default function PropertyForm() {
                 </div>
             </div>
 
-                {/* Property Description */}
+            {/* Property Description */}
             <div className="mb-4">
                 <label htmlFor="description" className="mb-2 block text-sm font-medium">
                     Property Description
@@ -44,7 +60,7 @@ export default function PropertyForm() {
                 </div>
             </div>
 
-                {/* Property Address */}
+            {/* Property Address */}
             <div className="mb-4">
                 <label htmlFor="address" className="mb-2 block text-sm font-medium">
                     Property Address
@@ -61,7 +77,25 @@ export default function PropertyForm() {
                 </div>
             </div>
 
-                {/* Property Image URL */}
+            <div>
+                <label>Images</label>
+                <div {...getRootProps({ className: 'dropzone' })}>
+                <input {...getInputProps()} />
+                <p>Drag 'n' drop some files here, or click to select files</p>
+                </div>
+                {images.length > 0 && (
+                <div>
+                    <h4>Uploaded Images</h4>
+                    <ul>
+                    {images.map((file) => (
+                        <li key={file.name}>{file.name}</li>
+                    ))}
+                    </ul>
+                </div>
+                )}
+            </div>
+
+            {/* Property Image URL */}
             <div className="mb-4">
                 <label htmlFor="image_url" className="mb-2 block text-sm font-medium">
                     Property Image URL
@@ -78,7 +112,7 @@ export default function PropertyForm() {
                 </div>
             </div>
 
-                {/* Property Monthly Rent */}
+            {/* Property Monthly Rent */}
             <div className="mb-4">
                 <label htmlFor="monthly_rent" className="mb-2 block text-sm font-medium">
                     Property Monthly Rent
@@ -95,7 +129,7 @@ export default function PropertyForm() {
                 </div>
             </div>
 
-                {/* Property Number of Tenants */}
+            {/* Property Number of Tenants */}
             <div className="mb-4">
                 <label htmlFor="tenants" className="mb-2 block text-sm font-medium">
                     Property Number of Tenants
@@ -112,7 +146,7 @@ export default function PropertyForm() {
                 </div>
             </div>
 
-                {/* Property lettingStatus */}
+            {/* Property lettingStatus */}
             <fieldset>
             <legend className="mb-2 block text-sm font-medium">
                 What is the current property letting status?
@@ -154,7 +188,7 @@ export default function PropertyForm() {
             </div>
             </fieldset>
 
-                {/* Property Compliance Status */}
+            {/* Property Compliance Status */}
            <fieldset>
             <legend className="mb-2 block text-sm font-medium">
                 What is the current compliance status?

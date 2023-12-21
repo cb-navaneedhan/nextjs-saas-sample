@@ -244,7 +244,7 @@ export async function fetchProperties() {
 
     try {
       const properties = await sql`SELECT * FROM properties`;
-      console.log('properties', properties);
+      // console.log('properties', properties);
       return properties.rows;
     } catch (error) {
       console.error('Failed to fetch properties:', error);
