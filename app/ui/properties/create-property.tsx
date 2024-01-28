@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from "react";
 import Link from 'next/link';
 import {
   CheckIcon,
@@ -6,22 +8,20 @@ import {
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 import { createProperty } from '@/app/lib/actions';
-import { useForm } from 'react-hook-form';
-import { useDropzone } from 'react-dropzone';
+import CustomFileSelector from '@/app/ui/properties/CustomFileSelector';
+import ImagePreview from "@/app/ui/properties/ImagePreview";
+import axios from 'axios';
 
 export default function PropertyForm() {
 
-    const { register, handleSubmit, setValue } = useForm();
-    const [images, setImages] = React.useState([]);
-
-    const onDrop = (acceptedFiles) => {
-        setImages((prevImages) => [...prevImages, ...acceptedFiles]);
-    };
-    const { getRootProps, getInputProps } = useDropzone({
-        onDrop,
-        accept: 'image/*',
-        multiple: true,
-    });
+  const [images, setImages] = useState<File[]>([]);
+  const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      //convert `FileList` to `File[]`
+      const _files = Array.from(e.target.files);
+      setImages(_files);
+    }
+  };
 
   return (
     <form action={createProperty}>
@@ -77,38 +77,23 @@ export default function PropertyForm() {
                 </div>
             </div>
 
-            <div>
-                <label>Images</label>
-                <div {...getRootProps({ className: 'dropzone' })}>
-                <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
-                </div>
-                {images.length > 0 && (
-                <div>
-                    <h4>Uploaded Images</h4>
-                    <ul>
-                    {images.map((file) => (
-                        <li key={file.name}>{file.name}</li>
-                    ))}
-                    </ul>
-                </div>
-                )}
-            </div>
-
             {/* Property Image URL */}
             <div className="mb-4">
                 <label htmlFor="image_url" className="mb-2 block text-sm font-medium">
                     Property Image URL
                 </label>
                 <div className="relative mt-2 rounded-md">
-                        <input
-                            id="imageUrl"
-                            name="imageUrl"
-                            type="text"
-                            placeholder="Enter Property Image URL"
-                            className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                            required
-                        />
+                    <CustomFileSelector
+                        accept="image/png, image/jpeg"
+                        onChange={handleFileSelected}
+                    />
+                    <button
+                        type="submit"
+                        className="bg-violet-50 text-violet-500 hover:bg-violet-100 px-4 py-2 rounded-md"
+                    >
+                        Upload
+                    </button>
+                    <ImagePreview images={images} />
                 </div>
             </div>
 
@@ -161,6 +146,7 @@ export default function PropertyForm() {
                     value="true"
                     checked
                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
+                    /* onChange={handleLettingStatusChange} */
                     />
                     <label
                     htmlFor="yes"
